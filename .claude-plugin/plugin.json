@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "solution-ladder",
+  "version": "1.0.0",
+  "description": "Iterative architecture refinement skill that forces structured exploration of three solution levels (Patch / Escape Hatch / Right Default) plus a lateral wildcard, developed by independent blind subagents and ranked by a blind judge before recommending the optimal one.",
+  "author": {
+    "name": "Yahor Bukhta",
+    "url": "https://github.com/nnslvp"
+  },
+  "homepage": "https://github.com/nnslvp/solution-ladder",
+  "repository": "https://github.com/nnslvp/solution-ladder",
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "architecture",
+    "refactoring",
+    "design",
+    "configuration",
+    "decision-making"
+  ]
+}

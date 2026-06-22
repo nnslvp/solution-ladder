@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "solution-ladder",
+  "owner": {
+    "name": "Yahor Bukhta",
+    "url": "https://github.com/nnslvp"
+  },
+  "description": "Single-skill marketplace distributing the Solution Ladder architecture-refinement skill.",
+  "plugins": [
+    {
+      "name": "solution-ladder",
+      "source": "./",
+      "description": "Climb the Solution Ladder: three independently developed solution levels plus a lateral wildcard, ranked by a blind judge to pick the option that actually fits the codebase.",
+      "category": "development",
+      "keywords": [
+        "architecture",
+        "refactoring",
+        "design"
+      ]
+    }
+  ]
+}
