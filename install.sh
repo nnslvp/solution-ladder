@@ -15,9 +15,10 @@
 # so it is skipped unless you set INSTALL_CLAUDE=1.
 #
 # Usage:
-#   ./install.sh                 # install into Codex and OpenCode if present
+#   ./install.sh                   # symlink into Codex and OpenCode if present
 #   INSTALL_CLAUDE=1 ./install.sh  # also symlink into ~/.claude/skills
-#   COPY=1 ./install.sh          # copy instead of symlink (no live updates)
+#   FORCE=1 ./install.sh           # replace an existing real folder with a symlink
+#   COPY=1 ./install.sh            # copy instead of symlink (no live updates)
 
 set -euo pipefail
 
@@ -30,17 +31,23 @@ if [ ! -f "$SRC/SKILL.md" ]; then
   exit 1
 fi
 
+detected=0
 installed=0
 
 install_into() {
   local label="$1" dir="$2"
   local target="$dir/$SKILL_NAME"
 
+  detected=$((detected + 1))
   mkdir -p "$dir"
 
   if [ -e "$target" ] && [ ! -L "$target" ]; then
-    echo "  [$label] skip: $target already exists and is not a symlink (remove it first)"
-    return
+    if [ "${FORCE:-0}" = "1" ]; then
+      rm -rf "$target"
+    else
+      echo "  [$label] skip: $target exists as a real folder (re-run with FORCE=1 to replace it with a symlink)"
+      return
+    fi
   fi
 
   if [ "${COPY:-0}" = "1" ]; then
@@ -71,12 +78,14 @@ if [ "${INSTALL_CLAUDE:-0}" = "1" ]; then
   install_into "claude" "$HOME/.claude/skills"
 fi
 
-if [ "$installed" -eq 0 ]; then
-  echo
+echo
+if [ "$detected" -eq 0 ]; then
   echo "No supported agent detected (Codex / OpenCode)."
-  echo "Pass the path manually, e.g.:"
+  echo "Install manually, e.g.:"
   echo "  ln -sfn \"$SRC\" ~/.codex/skills/$SKILL_NAME"
+elif [ "$installed" -eq 0 ]; then
+  echo "Nothing changed: every target already exists as a real folder."
+  echo "Re-run with FORCE=1 to replace them with symlinks so 'git pull' keeps them current."
 else
-  echo
   echo "Done. Start a NEW session in each tool to pick up the skill."
 fi

@@ -110,9 +110,11 @@ skills directory your agent scans (e.g. the vendor-neutral `~/.agents/skills/`).
 |---|---|
 | `./install.sh` | Symlink the skill into Codex and OpenCode if present. |
 | `INSTALL_CLAUDE=1 ./install.sh` | Also symlink into `~/.claude/skills/` (Claude Code personal scope). |
+| `FORCE=1 ./install.sh` | Replace an existing real folder with a symlink (e.g. converting an older manual copy). |
 | `COPY=1 ./install.sh` | Copy instead of symlink (no live updates on `git pull`). |
 
-The script never overwrites a real (non-symlink) directory — it skips and tells you.
+By default the script never overwrites a real (non-symlink) directory — it skips and
+tells you to re-run with `FORCE=1`.
 
 ---
 
